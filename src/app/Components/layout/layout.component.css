@@ -1,0 +1,23 @@
+.toolbar-primary {
+  background-color: #3f51b5; 
+  color: white; 
+}
+
+.icon-align {
+  display: flex ;
+  align-items: center;  
+
+}
+
+.mat-list:hover {
+  background-color: #f2f2f8c2; /* gris suave */
+}
+
+.margin-icon {  
+  margin-right: 8px;
+}
+
+
+.menu-line{
+  border-right: 1px solid #ccc;
+}

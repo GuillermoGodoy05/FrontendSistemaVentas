@@ -8,47 +8,52 @@ import { HistorialVentaComponent } from './Components/layout/Pages/historial-ven
 import { LoginComponent } from './Components/login/login.component';
 
 export const routes: Routes = [
-    
-    {
-        path: '',
-        component: LayoutComponent,
-        children: [
-            {
-                path: 'dashboard',
-                loadComponent: () => import('./Components/layout/Pages/dash-board/dash-board.component').then(c => c.DashBoardComponent)
-            },
-            {
-                path: 'usuarios',
-                loadComponent: () => import('./Components/layout/Pages/usuario/usuario.component').then(c => c.UsuarioComponent)
-            },
-            {
-                path: 'productos',
-                loadComponent: () => import('./Components/layout/Pages/producto/producto.component').then(c => c.ProductoComponent)
-            },
-            {
-                path: 'venta',
-                loadComponent: () => import('./Components/layout/Pages/venta/venta.component').then(c => c.VentaComponent)
-            },
-            {
-                path: 'historial-venta',
-                loadComponent: () => import('./Components/layout/Pages/historial-venta/historial-venta.component').then(c => c.HistorialVentaComponent)
-            },
-            {
-                path: 'reportes',
-                loadComponent: () => import('./Components/layout/Pages/historial-venta/historial-venta.component').then(c => c.HistorialVentaComponent)
-            },
-        ]
-    },   
-    {
-        path: 'login',
-        component: LoginComponent,
-        pathMatch: "full"
-    },   
-    {
-        path:'**',
-        redirectTo:'login',
-        pathMatch:"full"
-    }
+
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./Components/layout/Pages/dash-board/dash-board.component').then(c => c.DashBoardComponent)
+      },
+      {
+        path: 'usuarios',
+        loadComponent: () => import('./Components/layout/Pages/usuario/usuario.component').then(c => c.UsuarioComponent)
+      },
+      {
+        path: 'productos',
+        loadComponent: () => import('./Components/layout/Pages/producto/producto.component').then(c => c.ProductoComponent)
+      },
+      {
+        path: 'venta',
+        loadComponent: () => import('./Components/layout/Pages/venta/venta.component').then(c => c.VentaComponent)
+      },
+      {
+        path: 'historial-venta',
+        loadComponent: () => import('./Components/layout/Pages/historial-venta/historial-venta.component').then(c => c.HistorialVentaComponent)
+      },
+      {
+        path: 'reportes',
+        loadComponent: () => import('./Components/layout/Pages/historial-venta/historial-venta.component').then(c => c.HistorialVentaComponent)
+      },
+    ]
+  },
+  {
+    path: 'pages',
+    component: LayoutComponent,
+    pathMatch: "full"
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    pathMatch: "full"
+  },
+  {
+    path: '**',
+    redirectTo: 'login',
+    pathMatch: "full"
+  }
 
 ];
 
