@@ -10,13 +10,20 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-    <mat-sidenav #sidenav opened="true" mode="push" style="width: 200px;">
+    <mat-sidenav #sidenav opened="true" mode="side" style="width: 200px;">
         <mat-nav-list>
 
-            <mat-list-item class="mat-list">
-                <div class="icon-align">
+            <mat-list-item class="mat-list" routerLink="/dashboard">
+                <div class="icon-align" >
                     <mat-icon mat-list-icon class="margin-icon">dashboard</mat-icon>
                     <div mat-line>Dashboard</div>
+                </div>
+            </mat-list-item>
+          
+            <mat-list-item class="mat-list" routerLink="/usuarios">
+                <div class="icon-align">
+                    <mat-icon mat-list-icon class="margin-icon">group</mat-icon>
+                    <div mat-line>Usuarios</div>
                 </div>
             </mat-list-item>
             
@@ -24,7 +31,7 @@
    
     </mat-sidenav>
 
-    <mat-sidenav-content style="background-color:#e4e7f3be;">
+    <mat-sidenav-content style="background-color:#ece9e9;">
         <div style="height: 90vh;">
             <router-outlet></router-outlet>
         </div>

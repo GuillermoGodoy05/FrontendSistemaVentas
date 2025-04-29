@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common'; 
 
 @Component({
   selector: 'app-dash-board',
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   templateUrl: './dash-board.component.html',
-  styleUrl: './dash-board.component.css'
+  styleUrls: ['./dash-board.component.css']
 })
 export class DashBoardComponent {
 

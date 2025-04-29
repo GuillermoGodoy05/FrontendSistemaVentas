@@ -8,41 +8,41 @@ import { HistorialVentaComponent } from './Components/layout/Pages/historial-ven
 import { LoginComponent } from './Components/login/login.component';
 
 export const routes: Routes = [
-
-  {
+   {
     path: '',
     component: LayoutComponent,
     children: [
       {
         path: 'dashboard',
-        loadComponent: () => import('./Components/layout/Pages/dash-board/dash-board.component').then(c => c.DashBoardComponent)
+        loadComponent: () => import('./Components/layout/Pages/dash-board/dash-board.component')
+          .then(m => m.DashBoardComponent)
       },
       {
         path: 'usuarios',
-        loadComponent: () => import('./Components/layout/Pages/usuario/usuario.component').then(c => c.UsuarioComponent)
+        loadComponent: () => import('./Components/layout/Pages/usuario/usuario.component')
+          .then(m => m.UsuarioComponent)
       },
       {
         path: 'productos',
-        loadComponent: () => import('./Components/layout/Pages/producto/producto.component').then(c => c.ProductoComponent)
+        loadComponent: () => import('./Components/layout/Pages/producto/producto.component')
+          .then(m => m.ProductoComponent)
       },
       {
         path: 'venta',
-        loadComponent: () => import('./Components/layout/Pages/venta/venta.component').then(c => c.VentaComponent)
+        loadComponent: () => import('./Components/layout/Pages/venta/venta.component')
+          .then(m => m.VentaComponent)
       },
       {
         path: 'historial-venta',
-        loadComponent: () => import('./Components/layout/Pages/historial-venta/historial-venta.component').then(c => c.HistorialVentaComponent)
+        loadComponent: () => import('./Components/layout/Pages/historial-venta/historial-venta.component')
+          .then(m => m.HistorialVentaComponent)
       },
       {
         path: 'reportes',
-        loadComponent: () => import('./Components/layout/Pages/historial-venta/historial-venta.component').then(c => c.HistorialVentaComponent)
-      },
+        loadComponent: () => import('./Components/layout/Pages/historial-venta/historial-venta.component')
+          .then(m => m.HistorialVentaComponent)
+      }
     ]
-  },
-  {
-    path: 'pages',
-    component: LayoutComponent,
-    pathMatch: "full"
   },
   {
     path: 'login',

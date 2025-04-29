@@ -1,6 +1,6 @@
 .toolbar-primary {
-  background-color: #3f51b5; 
-  color: white; 
+  background-color: #4c5ec7; 
+  color: rgb(247, 243, 243); 
 }
 
 .icon-align {
@@ -10,7 +10,7 @@
 }
 
 .mat-list:hover {
-  background-color: #f2f2f8c2; /* gris suave */
+  background-color: #ffffffc2; /* gris suave */
 }
 
 .margin-icon {  
@@ -19,5 +19,5 @@
 
 
 .menu-line{
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #ddbbbb;
 }
