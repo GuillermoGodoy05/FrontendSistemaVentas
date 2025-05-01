@@ -33,14 +33,14 @@ export const routes: Routes = [
           .then(m => m.VentaComponent)
       },
       {
-        path: 'historial-venta',
+        path: 'historial_venta',
         loadComponent: () => import('./Components/layout/Pages/historial-venta/historial-venta.component')
           .then(m => m.HistorialVentaComponent)
       },
       {
         path: 'reportes',
-        loadComponent: () => import('./Components/layout/Pages/historial-venta/historial-venta.component')
-          .then(m => m.HistorialVentaComponent)
+        loadComponent: () => import('./Components/layout/Pages/reporte/reporte.component')
+          .then(m => m.ReporteComponent)
       }
     ]
   },
