@@ -10,7 +10,9 @@ import { UtilidadService } from '../../../../Reutilizable/utilidad.service';
 
 @Component({
   selector: 'app-modal-usuario',
-  imports: [],
+  imports: [
+    
+  ],
   templateUrl: './modal-usuario.component.html',
   styleUrl: './modal-usuario.component.css'
 })
@@ -31,7 +33,7 @@ export class ModalUsuarioComponent {
     private _utilidadServicio: UtilidadService
   ) {
 
-    this.formularioUsuario= this.fb.group({
+    this.formularioUsuario = this.fb.group({
       nombreCompleto: ["",Validators.required],
       correo: ["",Validators.required],
       idRol: ["",Validators.required],
@@ -46,7 +48,7 @@ export class ModalUsuarioComponent {
 
     this._rolServicio.lista().subscribe({
       next:(data) => {
-        if(data.status)this.listaRoles = data.value
+        if(data.status) this.listaRoles = data.value
       },
       error:(e)=>{}
     })
