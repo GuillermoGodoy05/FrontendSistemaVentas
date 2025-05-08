@@ -23,6 +23,12 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
  
   columnasTabla: string[] = ['nombreCompleto', 'correo','rolDescripcion','estado','acciones']
   dataInicio:Usuario[] = []
+  dataListaUsuarios = new MatTableDataSource(this.dataInicio);
+  @ViewChild(MatPaginator) paginacionTabla! : MatPaginator; // !Omite que sea null
+
+  constructor(){
+    
+  }
 
   ngAfterViewInit(): void {
     throw new Error('Method not implemented.');
