@@ -26,15 +26,31 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
   dataListaUsuarios = new MatTableDataSource(this.dataInicio);
   @ViewChild(MatPaginator) paginacionTabla! : MatPaginator; // !Omite que sea null
 
-  constructor(){
-    
+  constructor(
+    private dialog: MatDialog,
+    private _usuarioServicio: UsuarioService,
+    private _utilidadServicio: UtilidadService
+
+  ){}
+
+  obtenerUsuario() {
+    this._usuarioServicio.lista().subscribe({
+      next:(data) => {
+        if(data.status)
+          this.dataListaUsuarios.data = data.value;
+        else
+        this._utilidadServicio.mostrarAlerta("No se encontraron datos", "Oops")
+      },
+      error:(e)=>{}
+    })
+  }
+  
+  ngOnInit(): void {
+    this.obtenerUsuario();
   }
 
   ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
-  }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.dataListaUsuarios.paginator = this.paginacionTabla;
   }
   
  
