@@ -33,7 +33,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
 
   ){}
 
-  obtenerUsuario() {
+  obtenerUsuarios() {
     this._usuarioServicio.lista().subscribe({
       next:(data) => {
         if(data.status)
@@ -46,14 +46,67 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
   }
   
   ngOnInit(): void {
-    this.obtenerUsuario();
+    this.obtenerUsuarios();
   }
 
   ngAfterViewInit(): void {
     this.dataListaUsuarios.paginator = this.paginacionTabla;
   }
   
- 
 
+  aplicarFiltroTabla(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataListaUsuarios.filter = filterValue.trim().toLocaleLowerCase();
+  }
+
+  nuevoUsuario(){
+    this.dialog.open(ModalUsuarioComponent, {
+      disableClose:true
+    }).afterClosed().subscribe(resultado => {
+      if(resultado === "true") this.obtenerUsuarios();
+
+    })
+  }   
+
+
+  editarUsuario(usuario:Usuario){
+    this.dialog.open(ModalUsuarioComponent, {
+      disableClose:true,
+      data:usuario
+    }).afterClosed().subscribe(resultado => {
+      if(resultado === "true") this.obtenerUsuarios();
+    })
+  }  
+
+  eliminarUsuario(usuario:Usuario) {
+
+    Swal.fire({
+        title: "¿Desea eliminar el usuario",
+        text: usuario.nombreCompleto,
+        icon: "warning",
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: "Si, eliminar",
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'No, volver'
+    }).then((resultado) => {
+      if(resultado.isConfirmed){
+        this._usuarioServicio.eliminar(usuario.idUsuario).subscribe({
+          next:(data) => {
+            if(data.status){
+              this._utilidadServicio.mostrarAlerta("El usuario fue eliminado", "Listo!");
+              this.obtenerUsuarios();
+            }else
+            this._utilidadServicio.mostrarAlerta("No se pudo eliminar el", "Error")
+          },
+          error:(e)=>{}
+        })
+      }
+    })
+
+  }
 
 }
+
+
+
