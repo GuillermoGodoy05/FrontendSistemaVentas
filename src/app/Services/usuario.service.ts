@@ -24,7 +24,7 @@ export class UsuarioService {
   }
 
   guardar(request: Usuario):Observable<ResponseApi>{
-    return this.http.post<ResponseApi>(`${this.urlApi}Guardar`,request)
+    return this.http.post<ResponseApi>(`${this.urlApi}GuardarUsuario`,request)
   }
   editar(request: Usuario):Observable<ResponseApi>{
     return this.http.put<ResponseApi>(`${this.urlApi}Editar`,request)

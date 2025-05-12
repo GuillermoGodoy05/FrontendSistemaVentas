@@ -57,7 +57,7 @@ export class ModalUsuarioComponent {
       correo: ["",Validators.required],
       idRol: ["",Validators.required],
       clave: ["",Validators.required],
-      esactivo: ['1',Validators.required]
+      esActivo: ['1',Validators.required]
     });
 
     if(this.datosUsuarios != null){
@@ -81,7 +81,7 @@ export class ModalUsuarioComponent {
         correo: this.datosUsuarios.correo,
         idRol: this.datosUsuarios.idRol,
         clave: this.datosUsuarios.clave,
-        esactivo: this.datosUsuarios.esActivo.toString()
+        esActivo: this.datosUsuarios.esActivo.toString()
       })
     }
   }

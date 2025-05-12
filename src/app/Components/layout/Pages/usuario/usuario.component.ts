@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 import { ModalUsuarioComponent } from '../../Modales/modal-usuario/modal-usuario.component'; 
@@ -31,7 +32,8 @@ import Swal from 'sweetalert2'
     MatButtonModule,
     MatDividerModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatPaginatorModule
   ],
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.css']
