@@ -1,6 +1,16 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule  } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog'
+
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
+import { NgFor } from '@angular/common';
+
 
 import { Rol } from '../../../../Interfaces/rol';
 import { Usuario } from '../../../../Interfaces/usuario';
@@ -11,7 +21,16 @@ import { UtilidadService } from '../../../../Reutilizable/utilidad.service';
 @Component({
   selector: 'app-modal-usuario',
   imports: [
-    
+    ReactiveFormsModule,
+    MatDialogModule, 
+    MatSnackBarModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatGridListModule,
+    MatButtonModule,
+    NgFor
   ],
   templateUrl: './modal-usuario.component.html',
   styleUrl: './modal-usuario.component.css'

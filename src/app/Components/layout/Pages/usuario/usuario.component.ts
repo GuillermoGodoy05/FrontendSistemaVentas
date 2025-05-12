@@ -5,6 +5,16 @@ import {MatTableDataSource } from '@angular/material/table'
 import { MatPaginator } from '@angular/material/paginator'
 import { MatDialog } from '@angular/material/dialog'
 
+
+import { MatTableModule } from '@angular/material/table'
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import {MatDividerModule} from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+
 import { ModalUsuarioComponent } from '../../Modales/modal-usuario/modal-usuario.component'; 
 import { Usuario } from '../../../../Interfaces/usuario';
 import { UsuarioService } from '../../../../Services/usuario.service';
@@ -14,7 +24,14 @@ import Swal from 'sweetalert2'
 @Component({
   selector: 'app-usuario',
   imports: [
-    CommonModule
+    CommonModule,
+    MatTableModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.css']
