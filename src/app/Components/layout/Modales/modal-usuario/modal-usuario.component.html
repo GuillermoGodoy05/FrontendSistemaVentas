@@ -66,9 +66,15 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-raised-button mat-dialog-close color="warm">Volver</button>
-    <button mat-raised-button color="primary"
+    <button 
+        style="color: rgba(250, 80, 13, 0.952);"
+        mat-raised-button
+        mat-dialog-close
+    >Volver</button>
+    <button mat-raised-button 
+        style="color: #4c5ec7;"
         [disabled]="formularioUsuario.invalid"
-        (click)="guardarEditar_Usuario()"
-    >{{botonAccion}}</button>
+        (click)="guardarEditar_Usuario()">
+            {{botonAccion}}
+    </button>
 </mat-dialog-actions>

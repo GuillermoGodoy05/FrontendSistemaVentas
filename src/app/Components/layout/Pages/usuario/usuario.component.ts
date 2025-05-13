@@ -16,10 +16,10 @@ import { MatInputModule } from '@angular/material/input';
 import {MatPaginatorModule} from '@angular/material/paginator';
 
 
-import { ModalUsuarioComponent } from '../../Modales/modal-usuario/modal-usuario.component'; 
-import { Usuario } from '../../../../Interfaces/usuario';
-import { UsuarioService } from '../../../../Services/usuario.service';
-import { UtilidadService } from '../../../../Reutilizable/utilidad.service';
+import { ModalUsuarioComponent } from 'src/app/Components/layout/Modales/modal-usuario/modal-usuario.component'
+import { Usuario } from 'src/app/Interfaces/usuario'; 
+import { UsuarioService } from 'src/app/Services/usuario.service';
+import { UtilidadService } from 'src/app/Reutilizable/utilidad.service'; 
 import Swal from 'sweetalert2'
 
 @Component({
@@ -116,7 +116,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
               this._utilidadServicio.mostrarAlerta("El usuario fue eliminado", "Listo!");
               this.obtenerUsuarios();
             }else
-            this._utilidadServicio.mostrarAlerta("No se pudo eliminar el", "Error")
+            this._utilidadServicio.mostrarAlerta("No se pudo eliminar el usuario", "Error")
           },
           error:(e)=>{}
         })
