@@ -20,10 +20,12 @@ import { ModalUsuarioComponent } from 'src/app/Components/layout/Modales/modal-u
 import { ProductoService } from 'src/app/Services/producto.service';
 import { UtilidadService } from 'src/app/Reutilizable/utilidad.service';
 import { Producto } from 'src/app/Interfaces/producto';
+import { Venta } from 'src/app/Interfaces/venta';
 import { DetalleVenta } from 'src/app/Interfaces/detalle-venta';
 
 import { VentaService } from 'src/app/Services/venta.service';
 import Swal from 'sweetalert2'
+import { response } from 'express';
 
 
 
@@ -134,7 +136,42 @@ export class VentaComponent {
   }
 
   registrarVenta() {
-    
+    if(this.listaProductosParaVenta.length > 0 ) {
+
+      this.bloquearBotonRegistrar = true;
+
+      const request: Venta = {
+        tipoPago : this.tipoDePagoPorDefecto,
+        totalTexto : String(this.totalPagar.toFixed(2)),
+        detalleVenta : this.listaProductosParaVenta
+      }
+
+      this._ventaServicio.registrar(request).subscribe({
+        next: (response) => {
+          if(response.status){
+            this.totalPagar = 0.00;
+            this.listaProductosParaVenta = [];
+            this.datosDetalleVenta = new MatTableDataSource(this.listaProductosParaVenta);
+
+            Swal.fire({
+              icon:'success',
+              title : 'Venta registrada!',
+              text: `Numero de velta ${response.value.numeroDocumento}`
+            })
+
+          }else {
+            this._utilidadServicio.mostrarAlerta("No se pudo registrar la venta", "Oops");
+          }
+        },
+        complete: () => {
+          this.bloquearBotonRegistrar = false;
+        },
+        error: (e) => {
+          // console.log(e)  En caso de ser necesario   
+        }
+      })
+
+    }
   }
 
 }
