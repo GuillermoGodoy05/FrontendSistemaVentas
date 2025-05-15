@@ -14,14 +14,18 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgFor } from '@angular/common';
 
 
-import { ModalUsuarioComponent } from 'src/app/Components/layout/Modales/modal-usuario/modal-usuario.component'
+
 import { ProductoService } from 'src/app/Services/producto.service';
 import { UtilidadService } from 'src/app/Reutilizable/utilidad.service';
 import { Producto } from 'src/app/Interfaces/producto';
 import { Venta } from 'src/app/Interfaces/venta';
 import { DetalleVenta } from 'src/app/Interfaces/detalle-venta';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+import { MatGridListModule } from '@angular/material/grid-list'; 
 
 import { VentaService } from 'src/app/Services/venta.service';
 import Swal from 'sweetalert2'
@@ -41,8 +45,12 @@ import { response } from 'express';
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
-
-    ReactiveFormsModule
+    MatGridListModule,
+    
+    MatSelectModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    NgFor
     
   ],
   templateUrl: './venta.component.html',
@@ -125,6 +133,11 @@ export class VentaComponent {
     })
 
     this.datosDetalleVenta = new MatTableDataSource(this.listaProductosParaVenta);
+
+    this.formularioProductoVenta.patchValue({
+      producto:"",
+      cantidad:""
+    })
   }
 
   eliminarProducto(detalle: DetalleVenta){
@@ -167,7 +180,7 @@ export class VentaComponent {
           this.bloquearBotonRegistrar = false;
         },
         error: (e) => {
-          // console.log(e)  En caso de ser necesario   
+        // console.log(e)  Si es necesario
         }
       })
 
