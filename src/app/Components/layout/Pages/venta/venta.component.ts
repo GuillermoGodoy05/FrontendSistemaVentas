@@ -42,8 +42,8 @@ import { response } from 'express';
     MatInputModule,
     MatPaginatorModule,
 
-    ReactiveFormsModule,
-    MatTableDataSource
+    ReactiveFormsModule
+    
   ],
   templateUrl: './venta.component.html',
   styleUrl: './venta.component.css'
