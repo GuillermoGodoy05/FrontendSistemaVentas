@@ -33,17 +33,38 @@
             </mat-form-field>
         </mat-grid-tile>
 
-
-
     </mat-grid-list>
 
+    <h4>Lista de productos</h4>
+
+    <table mat-table [dataSource]="detalleVenta" class="mat-elevation-z2">
+
+        <ng-container matColumnDef="producto">
+            <th mat-header-cell *matHeaderCellDef> Producto </th>
+            <td mat-cell *matCellDef="let element"> {{element.descripcionProducto}} </td>
+        </ng-container>
+        <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
+        </ng-container>
+        <ng-container matColumnDef="precio">
+            <th mat-header-cell *matHeaderCellDef> Precio </th>
+            <td mat-cell *matCellDef="let element"> {{element.precioTexto}} </td>
+        </ng-container>
+        <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef> Total </th>
+            <td mat-cell *matCellDef="let element"> {{element.totalTexto}} </td>
+        </ng-container>
+     
+
+        <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
+        <tr mat-row *matRowDef="let row; columns:columnasTabla;"></tr>
+
+    </table>
 
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button style="color: rgba(250, 80, 13, 0.952);" mat-raised-button mat-dialog-close>Volver</button>
-    <button mat-raised-button style="color: #4c5ec7;" [disabled]="formularioUsuario.invalid"
-        (click)="guardarEditar_Usuario()">
-        {{botonAccion}}
-    </button>
+    <button cdkFocusInitial style="color: rgba(250, 80, 13, 0.952);" mat-raised-button mat-dialog-close>Volver</button>
+ 
 </mat-dialog-actions>
