@@ -6,6 +6,7 @@
     "outDir": "./dist/out-tsc",
     "baseUrl": "./",
     "strict": true,
+    "allowSyntheticDefaultImports": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,

@@ -1,7 +1,7 @@
 export interface Reporte {    
-    numeroDocumento: string,
-    tipoPago: string,
     fechaRegistro: string,
+    numeroDocumento: string,    
+    tipoPago: string,
     totalVenta: string,
     producto: string,
     cantidad: number,

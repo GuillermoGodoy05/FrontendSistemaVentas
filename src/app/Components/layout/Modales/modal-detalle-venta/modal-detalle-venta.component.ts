@@ -10,7 +10,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
 import { NgFor } from '@angular/common';
+
+import { FormsModule } from '@angular/forms'; // <--- Importa FormsModule
+import { MatDialogModule } from '@angular/material/dialog'; 
 
 
 import { Venta } from 'src/app/Interfaces/venta';
@@ -30,7 +34,9 @@ import { UtilidadService } from 'src/app/Reutilizable/utilidad.service';
     MatSelectModule,
     MatGridListModule,
     MatButtonModule,
-    NgFor
+    FormsModule,
+    MatTableModule,
+    MatDialogModule
   ],
   templateUrl: './modal-detalle-venta.component.html',
   styleUrl: './modal-detalle-venta.component.css'
