@@ -6,6 +6,16 @@
             <mat-icon>menu</mat-icon>
         </button>
 
+        <span style="flex: 1 1 auto;"></span>
+
+        <label style="font-size: 14px; margin-right: 5px;">
+            {{correoUsuario}} | {{rolUsuario}}
+        </label>
+
+        <button mat-icon-button (click)="cerrarSesion();">
+            <mat-icon style="color: white;">logout</mat-icon>
+        </button>
+
     </mat-toolbar-row>
 </mat-toolbar>
 
@@ -13,13 +23,13 @@
     <mat-sidenav #sidenav opened="true" mode="side" style="width: 200px;">
         <mat-nav-list>
 
-            <mat-list-item class="mat-list" routerLink="/dashboard">
-                <div class="icon-align" >
+            <!-- <mat-list-item class="mat-list" routerLink="/dashboard">
+                <div class="icon-align">
                     <mat-icon mat-list-icon class="margin-icon ">dashboard</mat-icon>
                     <div mat-line>DashBoard</div>
                 </div>
             </mat-list-item>
-          
+
             <mat-list-item class="mat-list" routerLink="/usuarios">
                 <div class="icon-align">
                     <mat-icon mat-list-icon class="margin-icon">group</mat-icon>
@@ -45,17 +55,17 @@
                     <mat-icon mat-list-icon class="margin-icon">edit_note</mat-icon>
                     <div mat-line>Historial Ventas</div>
                 </div>
-            </mat-list-item>
+            </mat-list-item> -->
 
-            <mat-list-item class="mat-list" routerLink="/reportes">
+            <mat-list-item *ngFor="let menu of listaMenus" class="mat-list" [routerLink]="[menu.url]">
                 <div class="icon-align">
-                    <mat-icon mat-list-icon class="margin-icon">receipt</mat-icon>
-                    <div mat-line>Reportes</div>
+                    <mat-icon mat-list-icon class="margin-icon">{{menu.icono}}</mat-icon>
+                    <div mat-line>{{menu.nombre}}</div>
                 </div>
             </mat-list-item>
-            
+
         </mat-nav-list>
-   
+
     </mat-sidenav>
 
     <mat-sidenav-content style="background-color:#ece9e9;">

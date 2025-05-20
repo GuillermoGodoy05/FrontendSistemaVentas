@@ -8,29 +8,48 @@ import { Sesion } from '../Interfaces/sesion';
 })
 export class UtilidadService {
 
-  constructor(private _sackBar: MatSnackBar) {}
+  constructor(private _sackBar: MatSnackBar) { }
 
-  mostrarAlerta(mensaje:string,tipo:string) {
+  mostrarAlerta(mensaje: string, tipo: string) {
 
-    this._sackBar.open(mensaje,tipo,{
-      horizontalPosition:"end",
-      verticalPosition:"top",
+    this._sackBar.open(mensaje, tipo, {
+      horizontalPosition: "end",
+      verticalPosition: "top",
       duration: 3000
     })
   }
   guardarSesionUsuario(usuarioSession: Sesion) {
-      localStorage.setItem("usuario", JSON.stringify(usuarioSession))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("usuario", JSON.stringify(usuarioSession));
+    } else {
+      console.warn('localStorage no está disponible, la sesión no se guardará.');
+    }
   }
 
-  obtenerSesionUsuario(){
-    const dataCadena = localStorage.getItem("usuario");
-
-    // signo de exclamació: esperamos si o si un valor que no sea nulo 
-    const usuario= JSON.parse(dataCadena!)
+  obtenerSesionUsuario() {
+  if (typeof window !== 'undefined') {
+      const dataCadena = localStorage.getItem("usuario");
+      if (dataCadena) {
+        try {
+          const usuario = JSON.parse(dataCadena) as Sesion;
+          return usuario;
+        } catch (error) {
+          console.error('Error al parsear la sesión del usuario:', error);
+          return null;
+        }
+      }
+    } else {
+      console.warn('localStorage no está disponible, no se puede obtener la sesión.');
+    }
+    return null;
   }
 
-  eliminarSesionUsuario(){
-    localStorage.removeItem("usuario")
+  eliminarSesionUsuario() {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem("usuario");
+    } else {
+      console.warn('localStorage no está disponible, no se puede eliminar la sesión.');
+    }
   }
 
 
