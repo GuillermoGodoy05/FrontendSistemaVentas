@@ -1,5 +1,6 @@
 import {
   AngularNodeAppEngine,
+  
   createNodeRequestHandler,
   isMainModule,
   writeResponseToNodeResponse,
@@ -7,6 +8,9 @@ import {
 import express from 'express';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { AngularAppEngine, createRequestHandler } from '@angular/ssr'
+import { getContext } from '@netlify/angular-runtime/context.mjs'
+
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
 const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -14,21 +18,16 @@ const browserDistFolder = resolve(serverDistFolder, '../browser');
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/**', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
+const angularAppEngine = new AngularAppEngine()
 
-/**
- * Serve static files from /browser
- */
+export async function netlifyAppEngineHandler(request: Request): Promise<Response> {
+  const context = getContext()
+  const result = await angularAppEngine.handle(request, context)
+  return result || new Response('Not found', { status: 404 })
+}
+
+export const reqHandler = createRequestHandler(netlifyAppEngineHandler)
+
 app.use(
   express.static(browserDistFolder, {
     maxAge: '1y',
@@ -63,4 +62,21 @@ if (isMainModule(import.meta.url)) {
 /**
  * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
  */
-export const reqHandler = createNodeRequestHandler(app);
+//export const reqHandler = createNodeRequestHandler(app);
+
+
+/**
+ * Example Express Rest API endpoints can be defined here.
+ * Uncomment and define endpoints as necessary.
+ *
+ * Example:
+ * ```ts
+ * app.get('/api/**', (req, res) => {
+ *   // Handle API request
+ * });
+ * ```
+ */
+
+/**
+ * Serve static files from /browser
+ */
