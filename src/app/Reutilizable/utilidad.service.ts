@@ -26,8 +26,8 @@ export class UtilidadService {
     }
   }
 
-  obtenerSesionUsuario() {
-  if (typeof window !== 'undefined') {
+  obtenerSesionUsuario(): Sesion | null {
+    if (typeof window !== 'undefined') {
       const dataCadena = localStorage.getItem("usuario");
       if (dataCadena) {
         try {
@@ -52,5 +52,8 @@ export class UtilidadService {
     }
   }
 
-
+  isLoggedIn(): boolean {
+    const usuario = this.obtenerSesionUsuario();    
+    return usuario !== null && usuario !== undefined;
+  }
 }

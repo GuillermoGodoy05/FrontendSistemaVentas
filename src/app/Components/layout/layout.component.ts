@@ -41,6 +41,10 @@ export class LayoutComponent {
 
   ngOnInit(): void {
     const usuario = this._utilidadServicio.obtenerSesionUsuario();
+    if (!this._utilidadServicio.isLoggedIn()) {
+      this.router.navigate(['/login']); // <-- Redirige a la ruta de tu componente de login
+      return; // Detiene la ejecución del resto del ngOnInit si no está logueado
+    }
 
     if (usuario != null) {
       this.correoUsuario = usuario.correo;
