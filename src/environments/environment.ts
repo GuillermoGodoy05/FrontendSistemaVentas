@@ -1,6 +1,6 @@
 export const environment = {
-    production: false,
-    endpoint: 'http://localhost:5009/api/'     
+    production: true,
+    endpoint: 'http://www.sistemaventasportfolio.somee.com/'     
   };
 
   
