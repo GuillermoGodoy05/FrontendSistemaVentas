@@ -63,7 +63,7 @@ export class LoginComponent {
       next: (data) => {
         if(data.status){
           this._utilidadServicio.guardarSesionUsuario(data.value);
-          this.router.navigate([""])
+          this.router.navigate(["/productos"])
         }else{
           this._utilidadServicio.mostrarAlerta("No se encontraron coinicidencias","Opps!")
         }
