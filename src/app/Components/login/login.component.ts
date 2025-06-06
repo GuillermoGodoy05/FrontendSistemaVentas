@@ -32,8 +32,8 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
 
   formularioLogin: FormGroup;
-  ocultarPassword:boolean = true;
-  mostrarLoading:boolean = false;
+  ocultarPassword: boolean = true;
+  mostrarLoading: boolean = false;
 
   constructor(
     private fb:FormBuilder,

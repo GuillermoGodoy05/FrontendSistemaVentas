@@ -25,7 +25,7 @@ import { Venta } from 'src/app/Interfaces/venta';
 import { DetalleVenta } from 'src/app/Interfaces/detalle-venta';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
-import { MatGridListModule } from '@angular/material/grid-list'; 
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { VentaService } from 'src/app/Services/venta.service';
 import Swal from 'sweetalert2'
@@ -46,12 +46,12 @@ import { response } from 'express';
     MatInputModule,
     MatPaginatorModule,
     MatGridListModule,
-    
+
     MatSelectModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
     NgFor
-    
+
   ],
   templateUrl: './venta.component.html',
   styleUrl: './venta.component.css'
@@ -84,12 +84,20 @@ export class VentaComponent {
     private _ventaServicio: VentaService,
     private _utilidadServicio: UtilidadService
 
-  ) 
-  {
+  ) {
     this.formularioProductoVenta = this.fb.group({
       producto: ["", Validators.required],
-      cantidad: ["", Validators.required]
+      cantidad: [
+        "",
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(10000),
+          Validators.pattern(/^[0-9]+$/)
+        ]
+      ]
     });
+
 
     this._productoServicio.lista().subscribe({
       next: (data) => {
@@ -101,32 +109,50 @@ export class VentaComponent {
       error: (e) => { }
     })
 
-    this.formularioProductoVenta.get('producto')?.valueChanges.subscribe(value =>{
+    this.formularioProductoVenta.get('producto')?.valueChanges.subscribe(value => {
       this.listaProductosFiltro = this.retornarProductosPorFiltro(value);
     });
-    
+
   }
-  
-  ngOnInit(): void {}  
+
+  ngOnInit(): void { }
 
   mostrarProducto(producto: Producto): string {
     return producto.nombre;
   }
 
-  productoParaVenta(event:any){
+  productoParaVenta(event: any) {
     this.productoSeleccionado = event.option.value;
   }
 
-  agregarProductoParaVenta(){
+  agregarProductoParaVenta() {
+
+    const productoIngresado = this.formularioProductoVenta.value.producto;
+
+    // Validar si se seleccionó un producto real de la lista
+    if (!this.productoSeleccionado || this.productoSeleccionado.nombre !== productoIngresado?.nombre) {
+      this._utilidadServicio.mostrarAlerta("Debe seleccionar un producto válido de la lista", "Atención");
+      return;
+    }
 
     const _cantidad: number = this.formularioProductoVenta.value.cantidad;
+    if (_cantidad > this.productoSeleccionado.stock) {
+      this._utilidadServicio.mostrarAlerta("La cantidad supera el stock disponible", "Atención");
+      return;
+    }
+
     const _precio: number = parseFloat(this.productoSeleccionado.precio);
     const _total: number = _cantidad * _precio;
     this.totalPagar = this.totalPagar + _total;
 
+    if (this.listaProductosParaVenta.some(p => p.idProducto === this.productoSeleccionado.idProducto)) {
+      this._utilidadServicio.mostrarAlerta("El producto ya está en la lista", "Atención");
+      return;
+    }
+
     this.listaProductosParaVenta.push({
       idProducto: this.productoSeleccionado.idProducto,
-      descripcionProducto : this.productoSeleccionado.nombre,
+      descripcionProducto: this.productoSeleccionado.nombre,
       cantidad: _cantidad,
       precioTexto: String(_precio.toFixed(2)),
       totalTexto: String(_total.toFixed(2)),
@@ -135,44 +161,44 @@ export class VentaComponent {
     this.datosDetalleVenta = new MatTableDataSource(this.listaProductosParaVenta);
 
     this.formularioProductoVenta.patchValue({
-      producto:"",
-      cantidad:""
+      producto: "",
+      cantidad: ""
     })
   }
 
-  eliminarProducto(detalle: DetalleVenta){
+  eliminarProducto(detalle: DetalleVenta) {
     this.totalPagar = this.totalPagar - parseFloat(detalle.totalTexto),
-    this.listaProductosParaVenta = this.listaProductosParaVenta.filter(p => p.idProducto != detalle.idProducto)
+      this.listaProductosParaVenta = this.listaProductosParaVenta.filter(p => p.idProducto != detalle.idProducto)
 
     this.datosDetalleVenta = new MatTableDataSource(this.listaProductosParaVenta);
 
   }
 
   registrarVenta() {
-    if(this.listaProductosParaVenta.length > 0 ) {
+    if (this.listaProductosParaVenta.length > 0) {
 
       this.bloquearBotonRegistrar = true;
 
       const request: Venta = {
-        tipoPago : this.tipoDePagoPorDefecto,
-        totalTexto : String(this.totalPagar.toFixed(2)),
-        detalleVenta : this.listaProductosParaVenta
+        tipoPago: this.tipoDePagoPorDefecto,
+        totalTexto: String(this.totalPagar.toFixed(2)),
+        detalleVenta: this.listaProductosParaVenta
       }
 
       this._ventaServicio.registrar(request).subscribe({
         next: (response) => {
-          if(response.status){
+          if (response.status) {
             this.totalPagar = 0.00;
             this.listaProductosParaVenta = [];
             this.datosDetalleVenta = new MatTableDataSource(this.listaProductosParaVenta);
 
             Swal.fire({
-              icon:'success',
-              title : 'Venta registrada!',
+              icon: 'success',
+              title: 'Venta registrada!',
               text: `Numero de velta ${response.value.numeroDocumento}`
             })
 
-          }else {
+          } else {
             this._utilidadServicio.mostrarAlerta("No se pudo registrar la venta", "Oops");
           }
         },
@@ -180,7 +206,7 @@ export class VentaComponent {
           this.bloquearBotonRegistrar = false;
         },
         error: (e) => {
-        // console.log(e)  Si es necesario
+          // console.log(e)  Si es necesario
         }
       })
 

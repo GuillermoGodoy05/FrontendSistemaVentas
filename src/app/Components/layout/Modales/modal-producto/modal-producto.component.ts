@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 
 import { Categoria } from 'src/app/Interfaces/categoria';
 import { Producto } from 'src/app/Interfaces/producto';
@@ -30,6 +30,7 @@ import { UtilidadService } from 'src/app/Reutilizable/utilidad.service';
     MatSelectModule,
     MatGridListModule,
     MatButtonModule,
+    CommonModule,
     NgFor
   ],
   templateUrl: './modal-producto.component.html',
@@ -50,29 +51,29 @@ export class ModalProductoComponent {
     private _utilidadServicio: UtilidadService,
   ) {
     this.formularioProducto = this.fb.group({
-      nombre: ["", Validators.required],
+      nombre: ["", [Validators.required, Validators.maxLength(100)]],
       idCategoria: ["", Validators.required],
-      stock: ["", Validators.required],
-      precio: ["", Validators.required],
-      esActivo: ['1', Validators.required]
+      stock: ["", [Validators.required, Validators.pattern(/^\d+$/), Validators.max(9999)]],
+      precio: ["", [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/), Validators.max(999999.99)]],
+      esActivo: ['1', [Validators.required, Validators.pattern(/^[01]$/)]]
     })
 
     if (this.datosProductos != null) {
       this.tituloAccion = "Editar",
-      this.botonAccion = "Actualizar"
+        this.botonAccion = "Actualizar"
     }
 
     this._categoriaServicio.lista().subscribe({
-      next:(data) => {
-        if(data.status) this.listaCategorias = data.value
+      next: (data) => {
+        if (data.status) this.listaCategorias = data.value
       },
-      error:(e)=>{}
+      error: (e) => { }
     })
 
   }
 
   ngOnInit(): void {
-    if(this.datosProductos != null){
+    if (this.datosProductos != null) {
       this.formularioProducto.patchValue({
         nombre: this.datosProductos.nombre,
         idCategoria: this.datosProductos.idCategoria,
@@ -84,43 +85,43 @@ export class ModalProductoComponent {
   }
 
   guardarEditar_Producto() {
-      const _producto: Producto = {
-        idProducto : this.datosProductos == null ? 0 : this.datosProductos.idProducto,
-        nombre : this.formularioProducto.value.nombre,
-        idCategoria : this.formularioProducto.value.idCategoria,      
-        descripcionCategoria : "",      
-        precio : this.formularioProducto.value.precio,
-        stock : this.formularioProducto.value.stock,
-        esActivo : parseInt(this.formularioProducto.value.esActivo)      
-  
-      }
-  
-      if(this.datosProductos == null) {
-        this._productoServicio.guardar(_producto).subscribe({
-          next:(data) => {
-            if(data.status){
-              this._utilidadServicio.mostrarAlerta("El producto fue registrado","Exito");
-              this.modalActual.close("true")
-            }else
-              this._utilidadServicio.mostrarAlerta("No se pudo registrar el producto","Error")
-          },
-          error:(e) =>{}
-        })
-      } else {
-  
-        this._productoServicio.editar(_producto).subscribe({
-          next:(data) => {
-            if(data.status){
-              this._utilidadServicio.mostrarAlerta("El producto fue editado","Exito");
-              this.modalActual.close("true")
-            }else
-              this._utilidadServicio.mostrarAlerta("No se pudo editar el producto","Error")
-          },
-          error:(e) =>{}
-        })
-  
-      }
-  
+    const _producto: Producto = {
+      idProducto: this.datosProductos == null ? 0 : this.datosProductos.idProducto,
+      nombre: this.formularioProducto.value.nombre,
+      idCategoria: this.formularioProducto.value.idCategoria,
+      descripcionCategoria: "",
+      precio: this.formularioProducto.value.precio,
+      stock: this.formularioProducto.value.stock,
+      esActivo: parseInt(this.formularioProducto.value.esActivo)
+
     }
+
+    if (this.datosProductos == null) {
+      this._productoServicio.guardar(_producto).subscribe({
+        next: (data) => {
+          if (data.status) {
+            this._utilidadServicio.mostrarAlerta("El producto fue registrado", "Exito");
+            this.modalActual.close("true")
+          } else
+            this._utilidadServicio.mostrarAlerta("No se pudo registrar el producto", "Error")
+        },
+        error: (e) => { }
+      })
+    } else {
+
+      this._productoServicio.editar(_producto).subscribe({
+        next: (data) => {
+          if (data.status) {
+            this._utilidadServicio.mostrarAlerta("El producto fue editado", "Exito");
+            this.modalActual.close("true")
+          } else
+            this._utilidadServicio.mostrarAlerta("No se pudo editar el producto", "Error")
+        },
+        error: (e) => { }
+      })
+
+    }
+
+  }
 
 }

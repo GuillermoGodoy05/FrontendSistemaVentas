@@ -4,14 +4,23 @@
     <form [formGroup]="formularioProducto">
         <mat-grid-list cols="1" rowHeight="80px">
 
+            <!-- Nombre -->
+            <!-- mat-error son los comentarios en caso que existan errores de validación -->
             <mat-grid-tile>
                 <mat-form-field appearance="outline">
                     <mat-label>Nombre</mat-label>
                     <input matInput autocomplete="off" formControlName="nombre">
                     <mat-icon matSuffix>fit-screen</mat-icon>
+                    <mat-error *ngIf="formularioProducto.get('nombre')?.hasError('required')">
+                        El nombre es obligatorio
+                    </mat-error>
+                    <mat-error *ngIf="formularioProducto.get('nombre')?.hasError('maxlength')">
+                        El nombre no puede tener más de 100 caracteres
+                    </mat-error>
                 </mat-form-field>
             </mat-grid-tile>
 
+            <!-- Categoría  -->
             <mat-grid-tile>
                 <mat-form-field appearance="outline">
                     <mat-label>Categoria</mat-label>
@@ -19,27 +28,50 @@
                         <mat-option *ngFor="let item of listaCategorias" [value]="item.idCategoria">
                             {{item.nombre}}
                         </mat-option>
-
                     </mat-select>
+                    <mat-error *ngIf="formularioProducto.get('idCategoria')?.hasError('required')">
+                        La categoría es obligatoria
+                    </mat-error>
                 </mat-form-field>
             </mat-grid-tile>
 
+            <!-- Stock -->
             <mat-grid-tile>
                 <mat-form-field appearance="outline">
                     <mat-label>Stock</mat-label>
                     <input matInput autocomplete="off" formControlName="stock" type="number">
                     <mat-icon matSuffix>edit_square</mat-icon>
+                    <mat-error *ngIf="formularioProducto.get('stock')?.hasError('required')">
+                        El stock es obligatorio
+                    </mat-error>
+                    <mat-error *ngIf="formularioProducto.get('stock')?.hasError('pattern')">
+                        El stock debe ser un número entero válido
+                    </mat-error>
+                    <mat-error *ngIf="formularioProducto.get('stock')?.hasError('max')">
+                        El stock no puede ser mayor a 9999
+                    </mat-error>
                 </mat-form-field>
             </mat-grid-tile>
 
+            <!-- Precio -->
             <mat-grid-tile>
                 <mat-form-field appearance="outline">
                     <mat-label>Precio</mat-label>
                     <input matInput autocomplete="off" formControlName="precio">
                     <mat-icon matSuffix>attach_money</mat-icon>
+                    <mat-error *ngIf="formularioProducto.get('precio')?.hasError('required')">
+                        El precio es obligatorio
+                    </mat-error>
+                    <mat-error *ngIf="formularioProducto.get('precio')?.hasError('pattern')">
+                        El precio debe ser un número válido (ej: 10.50)
+                    </mat-error>
+                    <mat-error *ngIf="formularioProducto.get('precio')?.hasError('max')">
+                        El precio no puede superar 999999.99
+                    </mat-error>
                 </mat-form-field>
             </mat-grid-tile>
-       
+
+            <!-- Estado -->
             <mat-grid-tile>
                 <mat-form-field appearance="outline">
                     <mat-label>Estado</mat-label>
@@ -47,6 +79,12 @@
                         <mat-option value="1">Activo</mat-option>
                         <mat-option value="0">No activo</mat-option>
                     </mat-select>
+                    <mat-error *ngIf="formularioProducto.get('esActivo')?.hasError('required')">
+                        El estado es obligatorio
+                    </mat-error>
+                    <mat-error *ngIf="formularioProducto.get('esActivo')?.hasError('pattern')">
+                        Valor inválido para estado
+                    </mat-error>
                 </mat-form-field>
             </mat-grid-tile>
 
@@ -57,17 +95,9 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button 
-        style="color: rgba(250, 80, 13, 0.952);"
-        mat-raised-button
-        mat-dialog-close
-    >Volver</button>
-    <button mat-raised-button 
-        style="color: #4c5ec7;"
-        [disabled]="formularioProducto.invalid"
+    <button style="color: rgba(250, 80, 13, 0.952);" mat-raised-button mat-dialog-close>Volver</button>
+    <button mat-raised-button style="color: #4c5ec7;" [disabled]="formularioProducto.invalid"
         (click)="guardarEditar_Producto()">
-            {{botonAccion}}
+        {{botonAccion}}
     </button>
 </mat-dialog-actions>
-
-
