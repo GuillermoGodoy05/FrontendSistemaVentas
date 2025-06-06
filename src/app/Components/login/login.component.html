@@ -16,6 +16,16 @@
                     <input formControlName="email" matInput autocomplete="off">
                     <mat-icon matSuffix>mail</mat-icon>
 
+                    <mat-error *ngIf="formularioLogin.get('email')?.hasError('required')">
+                        El correo es obligatorio
+                    </mat-error>
+                    <mat-error *ngIf="formularioLogin.get('email')?.hasError('email')">
+                        El correo no es válido
+                    </mat-error>
+                    <mat-error *ngIf="formularioLogin.get('email')?.hasError('maxlength')">
+                        Máximo 100 caracteres
+                    </mat-error>
+
                 </mat-form-field>
 
                 <mat-form-field class="full-width" appearance="outline">
@@ -26,6 +36,16 @@
                     <button mat-icon-button matSuffix (click)="ocultarPassword = !ocultarPassword" type="button">
                         <mat-icon matSuffix>{{ocultarPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
+
+                    <mat-error *ngIf="formularioLogin.get('password')?.hasError('required')">
+                        La clave es obligatoria
+                    </mat-error>
+                    <mat-error *ngIf="formularioLogin.get('password')?.hasError('minlength')">
+                        Mínimo 6 caracteres
+                    </mat-error>
+                    <mat-error *ngIf="formularioLogin.get('password')?.hasError('maxlength')">
+                        Máximo 100 caracteres
+                    </mat-error>
 
                 </mat-form-field>
 
@@ -44,9 +64,9 @@
 
         <div>
             <p>
-                Usuario: admin
+                Usuario: user&#64;admin	
             </p>
-            Password: 123
+            Password: 123456
         </div>
 
     </mat-card>

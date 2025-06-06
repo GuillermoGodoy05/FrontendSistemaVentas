@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder , FormGroup, Validator, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validator, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Login } from '../../Interfaces/login';
 import { UsuarioService } from '../../Services/usuario.service';
@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +23,8 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatButtonModule,
     ReactiveFormsModule,
-    MatProgressBarModule ,
+    MatProgressBarModule,
+    NgFor,
     CommonModule
   ],
   templateUrl: './login.component.html',
@@ -36,43 +37,43 @@ export class LoginComponent {
   mostrarLoading: boolean = false;
 
   constructor(
-    private fb:FormBuilder,
+    private fb: FormBuilder,
     private router: Router,
     private _usuarioServicio: UsuarioService,
     private _utilidadServicio: UtilidadService
   ) {
     this.formularioLogin = this.fb.group({
-      email:["",Validators.required],
-      password:["",Validators.required]
+      email: ["", [Validators.required, Validators.email, Validators.maxLength(100)]],
+      password: ["", [Validators.required, Validators.minLength(6), Validators.maxLength(100)]]
     })
   }
 
-  ngOnInit():void{}
+  ngOnInit(): void { }
 
   //iniciarSesion () Va a ser ejecutado cuando el usuario de click en el botor iniciar
-  iniciarSesion(){
+  iniciarSesion() {
 
     this.mostrarLoading = true;
 
-    const request : Login = {
-      correo : this.formularioLogin.value.email,
-      clave : this.formularioLogin.value.password
+    const request: Login = {
+      correo: this.formularioLogin.value.email,
+      clave: this.formularioLogin.value.password
     }
 
     this._usuarioServicio.iniciarSesion(request).subscribe({
       next: (data) => {
-        if(data.status){
+        if (data.status) {
           this._utilidadServicio.guardarSesionUsuario(data.value);
           this.router.navigate(["/productos"])
-        }else{
-          this._utilidadServicio.mostrarAlerta("No se encontraron coinicidencias","Opps!")
+        } else {
+          this._utilidadServicio.mostrarAlerta("No se encontraron coinicidencias", "Opps!")
         }
       },
-      complete : () => {
+      complete: () => {
         this.mostrarLoading = false;
       },
-      error : () => {
-        this._utilidadServicio.mostrarAlerta("Hubo un error","Opps!")
+      error: () => {
+        this._utilidadServicio.mostrarAlerta("Hubo un error", "Opps!")
       }
     })
 
