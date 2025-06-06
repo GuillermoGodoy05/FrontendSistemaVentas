@@ -51,12 +51,21 @@ export class UsuarioComponent implements OnInit, AfterViewInit {
     private _utilidadServicio: UtilidadService
 
   ){}
+/* 
+  if (data.status) {
+            // Si el estado es exitoso, ordenamos los productos antes de asignarlos
+            // idProducto, es la forma de identificar el orden de creación.          
+            const productosOrdenados = data.value.sort((a: Producto, b: Producto) => b.idProducto - a.idProducto);
+            this.dataListaProductos.data = productosOrdenados;
+          } else { */
 
   obtenerUsuarios() {
     this._usuarioServicio.lista().subscribe({
       next:(data) => {
-        if(data.status)
-          this.dataListaUsuarios.data = data.value;
+        if(data.status){
+          const usuariosOrdenados = data.value.sort((a:Usuario, b: Usuario)=> b.idUsuario - a.idUsuario);
+          this.dataListaUsuarios.data = usuariosOrdenados;
+        }
         else
         this._utilidadServicio.mostrarAlerta("No se encontraron datos", "Oops")
       },

@@ -54,7 +54,7 @@ export class ModalProductoComponent {
       nombre: ["", [Validators.required, Validators.maxLength(100)]],
       idCategoria: ["", Validators.required],
       stock: ["", [Validators.required, Validators.pattern(/^\d+$/), Validators.max(9999)]],
-      precio: ["", [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/), Validators.max(999999.99)]],
+      precio: ["", [Validators.required, Validators.min(0.01), Validators.pattern(/^\d+(\.\d{1,2})?$/), Validators.max(999999.99)]],
       esActivo: ['1', [Validators.required, Validators.pattern(/^[01]$/)]]
     })
 

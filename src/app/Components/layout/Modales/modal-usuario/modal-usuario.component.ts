@@ -9,8 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
-import { NgFor } from '@angular/common';
-
+import { CommonModule, NgFor } from '@angular/common';
 
 import { Rol } from 'src/app/Interfaces/rol';
 import { Usuario } from 'src/app/Interfaces/usuario';
@@ -30,6 +29,7 @@ import { UtilidadService } from 'src/app/Reutilizable/utilidad.service';
     MatSelectModule,
     MatGridListModule,
     MatButtonModule,
+    CommonModule,
     NgFor
   ],
   templateUrl: './modal-usuario.component.html',

@@ -68,6 +68,9 @@
                     <mat-error *ngIf="formularioProducto.get('precio')?.hasError('max')">
                         El precio no puede superar 999999.99
                     </mat-error>
+                    <mat-error *ngIf="formularioProducto.get('precio')?.hasError('min')">
+                        El precio debe ser mayor a 0
+                    </mat-error>
                 </mat-form-field>
             </mat-grid-tile>
 
